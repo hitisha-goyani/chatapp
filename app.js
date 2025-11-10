@@ -23,9 +23,17 @@ io.on("connection",(socket)=>{
     console.log("new websocket connection established");
       //   io.emit("message", "welcome");
 
-      io.emit("newConnection",generateMessage(" a new user joined"));
+      socket.on("join",({username,room})=>{
+          socket.join(room);
+     
+          io.to(room).emit("newConnection",generateMessage(`${username} has joined`)
+     );
+          socket.to(room).emit("message",generateMessage(`welcome ${username}`));
+      })
 
-      socket.emit("message",generateMessage("welcome"));
+     //  io.emit("newConnection",generateMessage(" a new user joined"));
+
+     //  socket.emit("message",generateMessage("welcome"));
 
      socket.on("sendMessage",(msg,callback)=>{
           console.log(msg);
