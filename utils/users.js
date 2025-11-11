@@ -1,41 +1,49 @@
 const users = [];
 
-const addUser = ({id,username,room}) =>{
-    username = username.trim().toLowerCase();
-    room = room.trim().toLowerCase();
+const addUser = ({ id, username, room }) => {
+  username = username.trim().toLowerCase();
 
-    if(!username || !room){
-        return alert("username and room data is required")
-    }
+  room = room.trim().toLowerCase();
 
+  if (!username || !room) {
+    return {
+      error: "username and room data is required",
+    };
+  }
 
-//existing user
+  //   existing user
 
-
-const existingUser = users.find(
+  const existingUser = users.find(
     (user) => user.username === username && user.room === room
-);
-if(existingUser){
-    return alert("user already exists with this id");
-}
-const user = {id,username,room};
+  );
 
-users.push(user);
+  if (existingUser) {
+    return {
+      error: "user already exist with this id",
+    };
+  }
 
-return {users};
+  const user = { id, username, room };
 
-}
+  users.push(user);
+
+  return { user };
+};
+
+const getUser = (id) => {
+  const user = users.find((user) => user.id === id);
+
+  return user;
+};
+
+const removeUser = (id) => {
+  const index = users.findIndex((user) => user.id === id);
+
+  if (index !== -1) {
+    return users.splice(index, 1)[0];
+  }
+};
 
 
-const getUser = (id)=>{
-    const user = users.find((user)=>user.id === id);
-    return user;
-}
 
-const removeUser = (id) =>{
-    const index = users.findIndex((user)=>user.id === id);
-
-    if(index !== -1){
-        return users.splice(index,1)[0];
-    }
-}
+export { addUser, getUser, removeUser};
