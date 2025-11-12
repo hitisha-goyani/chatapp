@@ -1,14 +1,15 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>chat  app</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="join-page">
     <h1>join chat room </h1>
 
-    <form action="./chat.html">
+    <form class="join-form"  action="./chat.html">
       <label for="displayName">User Name</label>
       <input
         type="text"
@@ -33,5 +34,86 @@
       <button type="submit">join</button>
     </form>
     
+</body>
+</html>
+ -->
+
+ <!DOCTYPE html>
+<html lang="en" class="h-full bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#312e81]">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join Chat Room | ChatVerse</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen flex items-center justify-center font-sans text-white relative overflow-hidden px-4 sm:px-6 lg:px-8">
+
+  <!-- 💫 Background Glow Effects -->
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute top-[-10%] left-[15%] w-[220px] h-[220px] sm:w-[300px] sm:h-[300px] md:w-[350px] md:h-[350px] bg-purple-600/40 blur-[100px] sm:blur-[120px] rounded-full animate-pulse"></div>
+    <div class="absolute bottom-[-10%] right-[10%] w-[220px] h-[220px] sm:w-[300px] sm:h-[300px] md:w-[350px] md:h-[350px] bg-blue-500/40 blur-[100px] sm:blur-[120px] rounded-full animate-pulse delay-150"></div>
+  </div>
+
+  <!-- 🌟 Glass Card -->
+  <div class="relative z-10 bg-white/10 backdrop-blur-2xl border border-white/20 shadow-2xl rounded-3xl p-6 sm:p-8 md:p-10 w-full max-w-sm sm:max-w-md md:max-w-lg text-center transform transition-all hover:scale-[1.02] duration-300">
+
+    <!-- 🧾 Header -->
+    <div class="mb-8 sm:mb-10">
+      <h1 class="text-5xl sm:text-4xl md:text-1xl font-extrabold bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-300 bg-clip-text text-transparent drop-shadow-lg tracking-wide leading-tight">
+        Welcome to 
+        <br class="block sm:hidden" />
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">ChatVerse</span>
+      </h1>
+      <p class="text-gray-300 mt-3 text-xs sm:text-sm md:text-base leading-relaxed">
+        Dive into real-time conversations 💬 — create or join your favorite room and connect instantly!
+      </p>
+    </div>
+
+    <!-- 🧑‍💻 Join Form -->
+    <form action="./chat.html" class="space-y-5 sm:space-y-6 md:space-y-8 text-left">
+      <!-- Username -->
+      <div class="text-left">
+        <label for="username" class="block text-gray-200 text-xs sm:text-sm md:text-base font-semibold mb-2 tracking-wide">👤 Your Name</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Type your name here"
+          required
+          class="w-full px-3 sm:px-4 py-2.5 sm:py-3 md:py-3.5 rounded-lg bg-white/15 text-white placeholder-gray-300 border border-white/30 focus:ring-2 focus:ring-cyan-400 focus:outline-none transition-all text-sm sm:text-base"
+        />
+      </div>
+
+      <!-- Room Name -->
+      <div class="text-left">
+        <label for="room" class="block text-gray-200 text-xs sm:text-sm md:text-base font-semibold mb-2 tracking-wide">💬 Room Name</label>
+        <input
+          type="text"
+          id="room"
+          name="room"
+          placeholder="Enter room to join or create"
+          required
+          class="w-full px-3 sm:px-4 py-2.5 sm:py-3 md:py-3.5 rounded-lg bg-white/15 text-white placeholder-gray-300 border border-white/30 focus:ring-2 focus:ring-indigo-400 focus:outline-none transition-all text-sm sm:text-base"
+        />
+      </div>
+
+      <!-- Join Button -->
+      <div class="pt-3 sm:pt-4">
+        <button
+          type="submit"
+          class="w-full py-3 sm:py-3.5 md:py-4 text-sm sm:text-base md:text-lg font-semibold rounded-xl bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400 text-white shadow-lg hover:shadow-cyan-500/40 hover:scale-105 transition-all duration-300"
+        >
+          Enter the Chat 🚀
+        </button>
+      </div>
+    </form>
+
+    <!-- 🌍 Footer -->
+    <p class="text-center text-gray-400 text-[10px] sm:text-xs md:text-sm mt-8 sm:mt-10">
+      Powered by <span class="text-cyan-300 font-semibold">Tailwind CSS</span> — Chat smarter, faster, together 💫
+    </p>
+  </div>
+
 </body>
 </html>

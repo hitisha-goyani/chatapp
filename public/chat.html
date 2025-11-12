@@ -1,40 +1,171 @@
+    <!-- <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>chat app</title>
+         <link rel="stylesheet" href="style.css">
+    </head>
+    <body  class="chat-page">
+        <h1>chat app</h1>
+
+        <p id="sidebar">sidebar</p>
+
+        <form id="msg-form">
+            <input type="text" name="message"  id="msg" placeholder="enter your message"autocomplete="off" >
+
+            <button id="location">share location</button>
+            <button type="submit">send</button>
+        </form>
+
+        <br/>
+        <div id="messages"></div>
+
+        <script id="msg-template" type="text/html">
+            <div><p>{{username}}-{{createdAt}}</p></div>
+            <div><p>{{message}}</p></div>
+            </script>
+
+            <div id="location-msg"></div>
+            <script id="location-template" type="text/html">
+                <div>
+                <p>{{username}}-{{createdAt}}</p>
+                <a href="{{url}}" target="_blank"><p>my current location</p></a>
+                </div>
+            </script>
+
+            <script id="sidebar-template" type="text/html">
+                <h1>room</h1>
+                <p>{{room}}</p>
+                <ul>
+                    {{#users}}
+                    <li>{{username}}</li>
+                    {{/users}}
+                </ul>
+            </script>
+
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.14.0/qs.min.js"></script>
+            <script src="socket.io/socket.io.js"></script>
+            <script src="./chat.js"></script>
+    </body>
+    </html> -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#312e81]">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>chat app</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat Room | ChatVerse</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-       <h1>chat app</h1>
-       <form id="msg-form">
-        <input type="text" name="message"  id="msg" placeholder="enter your message"autocomplete="off" >
 
-        <button id="location">share location</button>
-        <button type="submit">send</button>
-       </form>
+<body class="min-h-screen flex items-center justify-center font-sans text-white relative overflow-hidden">
 
-       <br/>
-       <div id="messages"></div>
+  <!-- 🌈 Background Glow -->
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute top-[-15%] left-[5%] w-[280px] sm:w-[350px] h-[280px] sm:h-[350px] bg-indigo-600/40 blur-[120px] rounded-full animate-pulse"></div>
+    <div class="absolute bottom-[-10%] right-[5%] w-[280px] sm:w-[350px] h-[280px] sm:h-[350px] bg-purple-500/40 blur-[130px] rounded-full animate-pulse delay-200"></div>
+  </div>
 
-       <script id="msg-template" type="text/html">
-            <div>   
-                <p>{{createdAt}}-{{message}}</p>
-            </div>
+  <!-- 💎 Chat Container -->
+  <div class="relative z-10 w-full max-w-7xl h-[85vh] flex flex-col md:flex-row bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-[0_0_50px_rgba(99,102,241,0.25)] overflow-hidden">
+
+    <!-- 🧭 Sidebar -->
+    <aside class="hidden md:flex flex-col w-full md:w-1/4 bg-white/5 border-b md:border-b-0 md:border-r border-white/10 p-6 overflow-y-auto">
+      <div id="sidebar" class="space-y-4">
+        <script id="sidebar-template" type="text/html">
+          <div>
+            <h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-300 mb-2">
+              🏠 Room: <span class="font-semibold">{{room}}</span>
+            </h2>
+            <p class="text-gray-300 text-sm mb-3">👥 Active Members</p>
+            <ul class="space-y-2">
+              {{#users}}
+              <li class="bg-white/10 border border-white/20 px-3 py-2 rounded-lg text-sm hover:bg-white/20 transition flex items-center gap-2">
+                <span>💫</span> {{username}}
+              </li>
+              {{/users}}
+            </ul>
+          </div>
+        </script>
+      </div>
+    </aside>
+
+    <!-- 💬 Main Chat Section -->
+    <main class="flex-1 flex flex-col">
+      <!-- 🌈 Header -->
+      <header class="p-4 sm:p-6 text-center border-b border-white/10 bg-gradient-to-r from-indigo-600/30 via-purple-600/30 to-cyan-500/30 backdrop-blur-lg shadow-inner">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-cyan-300 drop-shadow-md">
+          💬 Welcome to ChatVerse Room
+        </h1>
+        <p class="text-sm sm:text-base text-gray-300 mt-1">Connect. Chat. Share your world 🌍</p>
+      </header>
+
+      <!-- 💬 Messages Area -->
+      <section id="messages" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 scroll-smooth">
+        <!-- 🗨️ Text Message Template -->
+        <script id="msg-template" type="text/html">
+          <div class="max-w-[85%] bg-gradient-to-r from-indigo-600/20 to-blue-500/20 rounded-xl px-5 py-3 shadow-lg border border-white/10 backdrop-blur-sm">
+            <p class="text-xs text-indigo-300 mb-1 flex items-center gap-1">🧑 {{username}} <span class="text-gray-400">• {{createdAt}}</span></p>
+            <p class="text-white leading-relaxed">{{message}}</p>
+          </div>
         </script>
 
+        <!-- 📍 Location Messages Template -->
         <div id="location-msg"></div>
         <script id="location-template" type="text/html">
-            <div><a href="{{url}}" target="_blank">
-                
-                <p>{{createdAt}}-my current location</p></a></div>
+          <div class="max-w-[85%] bg-gradient-to-r from-green-500/20 to-cyan-500/20 rounded-xl px-5 py-3 shadow-lg border border-green-400/20 backdrop-blur-sm">
+            <p class="text-xs text-green-300 mb-1 flex items-center gap-1">📍 {{username}} <span class="text-gray-400">• {{createdAt}}</span></p>
+            <a href="{{url}}" target="_blank" class="text-green-300 underline hover:text-green-200">
+              View Shared Location 🌍
+            </a>
+          </div>
         </script>
+      </section>
 
+      <!-- ✏️ Input Bar -->
+      <form id="msg-form" class="flex flex-wrap sm:flex-nowrap items-center gap-3 p-4 border-t border-white/10 bg-white/10 backdrop-blur-xl">
+        <input
+          id="msg"
+          name="message"
+          type="text"
+          placeholder="💭 Type your message..."
+          autocomplete="off"
+          required
+          class="flex-1 px-4 py-3 rounded-full bg-white/20 text-white placeholder-gray-300 border border-white/30 focus:ring-2 focus:ring-indigo-400 focus:outline-none transition-all text-sm sm:text-base"
+        />
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.14.0/qs.min.js"></script>
-        <script src="socket.io/socket.io.js"></script>
-        <script src="./chat.js"></script>
+        <!-- 📍 Location Button -->
+        <button
+          id="location"
+          type="button"
+          class="flex-1 sm:flex-none sm:w-auto px-5 py-3 bg-gradient-to-r from-green-400 to-cyan-400 text-white font-semibold rounded-full hover:scale-105 hover:shadow-lg transition-all text-sm sm:text-base"
+        >
+          🌍 Share Location
+        </button>
+
+        <!-- 🚀 Send Button -->
+        <button
+          type="submit"
+          class="flex-1 sm:flex-none sm:w-auto px-6 py-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400 text-white font-semibold rounded-full hover:scale-105 hover:shadow-[0_0_20px_rgba(147,51,234,0.5)] transition-all text-sm sm:text-base"
+        >
+          🚀 Send Message
+        </button>
+      </form>
+    </main>
+  </div>
+
+  <!-- 📚 Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.14.0/qs.min.js"></script>
+  <script src="socket.io/socket.io.js"></script>
+
+  <!-- 💬 JS File -->
+  <script src="./chat.js"></script>
 </body>
 </html>
+
+

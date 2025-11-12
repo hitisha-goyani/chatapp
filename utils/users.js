@@ -44,6 +44,11 @@ const removeUser = (id) => {
   }
 };
 
+const getUserInChatRoom = (room) => {
+  const userList = users.filter((user) => user.room === room);
+  return userList;
+};
 
 
-export { addUser, getUser, removeUser};
+
+export { addUser, getUser, removeUser,getUserInChatRoom};
